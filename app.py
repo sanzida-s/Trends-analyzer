@@ -289,7 +289,7 @@ def process_prediction(pred_raw):
     parsed = pred['Campaign'].apply(
         lambda x: pd.Series(parse_campaign(x), index=['brand','geo','camp_type']))
     pred = pd.concat([pred, parsed], axis=1)
-    pred['date']  = pd.to_datetime(pred['Date'], dayfirst=False, infer_datetime_format=True)
+    pred['date']  = pd.to_datetime(pred['Date'], dayfirst=False)
     pred['month'] = pred['date'].dt.to_period('M').astype(str)
     pred['week']  = pred['date'].dt.isocalendar().week
     pred['year']  = pred['date'].dt.year
@@ -335,7 +335,7 @@ def process_beeswax(bw_raw):
     df['Impressions']  = pd.to_numeric(df['Impressions'].astype(str).str.replace(',',''), errors='coerce').fillna(0)
     df['Clicks']       = pd.to_numeric(df['Clicks'].astype(str).str.replace(',',''), errors='coerce').fillna(0)
     df['Conversions']  = pd.to_numeric(df['Conversions'].astype(str).str.replace(',',''), errors='coerce').fillna(0)
-    df['date']         = pd.to_datetime(df['Date'], dayfirst=False, infer_datetime_format=True)
+    df['date']         = pd.to_datetime(df['Date'], dayfirst=False)
     df['month']        = df['date'].dt.to_period('M').astype(str)
 
     parsed = df['Insertion Order'].apply(

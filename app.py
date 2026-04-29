@@ -289,7 +289,7 @@ def process_prediction(pred_raw):
     parsed = pred['Campaign'].apply(
         lambda x: pd.Series(parse_campaign(x), index=['brand','geo','camp_type']))
     pred = pd.concat([pred, parsed], axis=1)
-    pred['date']  = pd.to_datetime(pred['Date'], dayfirst=False)
+    pred['date'] = pd.to_datetime(pred['Date'], format='mixed', dayfirst=False)
     pred['month'] = pred['date'].dt.to_period('M').astype(str)
     pred['week']  = pred['date'].dt.isocalendar().week
     pred['year']  = pred['date'].dt.year
